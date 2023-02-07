@@ -49,15 +49,16 @@ class ExactSolver(LCPSSolver):
             np.array, np.array : Eigenvalues and eigenvectors sorted with respect to the eigenvalues.
         """
 
-        eig_values, eig_vectors = None
+        eig_values, eig_vectors = None, None
 
         ################################################################################################################
         # YOUR CODE HERE (OPTIONAL)
         # TO COMPLETE (after lecture on VQE)
         # Hint : np.linalg.eigh
+        eig_values, eig_vectors = np.linalg.eigh(observable.to_matrix())
         ################################################################################################################
 
-        raise NotImplementedError()
+        # raise NotImplementedError()
 
         return eig_values, eig_vectors
 
@@ -72,17 +73,19 @@ class ExactSolver(LCPSSolver):
             float, np.array : The lowest eigenvalue and the associated eigenvector.
         """
 
-        eig_value, eig_vector = None
+        eig_value, eig_vector = None, None
 
         ################################################################################################################
         # YOUR CODE HERE (OPTIONAL)
         # TO COMPLETE (after lecture on VQE)
+        eig_values, eig_vectors = self.eig(observable)
+        eig_value, eig_vector = eig_values[0], eig_vectors[0]
         ################################################################################################################
 
-        raise NotImplementedError()
+        #raise NotImplementedError()
 
         self.last_opt_params = eig_vector  # store the state vector for retrieval
-        return eig_value
+        return eig_value, eig_vector
 
 
 class VQESolver(LCPSSolver):
@@ -125,16 +128,19 @@ class VQESolver(LCPSSolver):
 
         t0 = time.time()
 
-        opt_value, opt_params = None
+        opt_value, opt_params = None, None
 
         ################################################################################################################
         # YOUR CODE HERE (OPTIONAL)
         # TO COMPLETE (after lecture on VQE)
+        self.estimator.set_observable(observable)
+        min_result = self.minimizer(self.estimator.eval, self.start_params)
+        opt_params, opt_value = min_result.x, min_result.fun
         ################################################################################################################
 
-        raise NotImplementedError()
+        # raise NotImplementedError()
 
         self.last_minimization_duration = time.time()-t0
-        self.last_opt_params = opt_params  # store the parameters of the variationnal circuit.
+        self.last_opt_params = opt_params  # store the parameters of the variational circuit.
         return opt_value
 

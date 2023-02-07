@@ -302,9 +302,14 @@ class PauliString:
         # Hints : start with
         # matrix = np.ones((1,1),dtype = np.complex128)
         # And then use the np.kron() method to build the matrix
+        matrix = np.ones((1,1),dtype = np.complex128)
+        pauli_str = str(self)
+        map = {'I': I_MAT, 'X': X_MAT, 'Y': Y_MAT, 'Z': Z_MAT}
+        for map_key in pauli_str:
+            matrix = np.kron(matrix, map[map_key])
         ################################################################################################################
 
-        raise NotImplementedError()
+        #raise NotImplementedError()
         
         return matrix
 
@@ -696,8 +701,10 @@ class LinearCombinaisonPauliString:
         # YOUR CODE HERE (OPTIONAL)
         # TO COMPLETE (after lecture on mapping)
         # Hints : sum all the matrices of all PauliStrings weighted by their coef
+        for coef, pauli_string in zip(self.coefs, self.pauli_strings):
+            matrix += coef*pauli_string.to_matrix()
         ################################################################################################################
 
-        raise NotImplementedError()
+        #raise NotImplementedError()
 
         return matrix
