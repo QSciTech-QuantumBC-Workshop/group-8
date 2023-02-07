@@ -79,7 +79,7 @@ class ExactSolver(LCPSSolver):
         # YOUR CODE HERE (OPTIONAL)
         # TO COMPLETE (after lecture on VQE)
         eig_values, eig_vectors = self.eig(observable)
-        eig_value, eig_vector = eig_values[0], eig_vectors[0]
+        eig_value, eig_vector = eig_values[0], eig_vectors[:, 0]
         ################################################################################################################
 
         #raise NotImplementedError()
